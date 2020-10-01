@@ -98,5 +98,8 @@ cd ~
 echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
 source ~/.bashrc
 
+echo '[INFO] Removing builded ROS inside repository'
+sudo rm -rf ./melodic
+
 echo '[DONE] The installation has completed! Start your journey now!'
 
