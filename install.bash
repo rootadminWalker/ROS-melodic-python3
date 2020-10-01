@@ -76,6 +76,7 @@ echo '[INFO] Installing ROS melodic with python3'
 echo
 
 cd $ROS_PATH
+unzip ./melodic.zip
 cd melodic
 rosdep install --from-path src --ignore-src --rosdistro melodic -y
 
