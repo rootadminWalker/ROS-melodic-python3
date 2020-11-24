@@ -31,8 +31,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+echo '[INFO] Hi, this is the installation of ROS melodic with python3 version'
 echo '[WARN] This version of ROS is compatible with ubuntu 18.04 (Bionic) or 17.04 (Artful) and Debian Strench'
-echo '1, ROS melodic with python3'
 echo '[INFO] You will be granted to enter your password at the beginning for permission'
 echo '[INFO] The system will grant you to enter your password again when the installation started more than 5 minutes'
 echo '[INFO] Press ENTER IF YOU PROCESSED TO START THE INSTALLATION'
@@ -58,7 +58,8 @@ sudo apt install -y python3 python3-dev python3-pip build-essential -y
 echo '[INFO] Installing packages which build ROS'
 echo
 
-sudo -H pip3 install rosdep rospkg rosinstall_generator rosinstall wstool vcstools catkin_tools catkin_pkg
+sudo -H pip3 install rosdep rospkg rosinstall wstool vcstools catkin_tools catkin_pkg
+sudo apt install python3-pyqt5 python3-defusedxml
 
 echo '[INFO] Initializing packages'
 echo
@@ -66,13 +67,7 @@ echo
 sudo rosdep init
 rosdep update
 
-echo '[INFO] Prepare for installation'
-echo
-
-catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
-catkin config --init -DCMAKE_BUILD_TYPE=Release --blacklist rqt_rviz rviz_plugin_tutorials librviz_tutorial --install
-
-echo '[INFO] Installing ROS melodic with python3'
+echo '[INFO] Installing ROS melodic dependencies'
 echo
 
 cd $ROS_PATH
@@ -80,10 +75,21 @@ unzip ./melodic.zip
 cd melodic
 rosdep install --from-path src --ignore-src --rosdistro melodic -y
 
+echo '[INFO] Prepare for installation'
+echo
+catkin init
+catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so -DCMAKE_BUILD_TYPE=Release --blacklist rqt_rviz rviz_plugin_tutorials librviz_tutorial --install --install-space=/opt/ros/melodic
+
+echo '[INFO] Installing ROS'
+echo
 export ROS_PYTHON_VERSION=3
-sudo ./src/catkin/bin/catkin_make_isolated --install --install-space /opt/ros/melodic -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+sudo catkin build
 
 sudo apt install ros-melodic-gazebo* -y
+
+echo '[INFO] Removing builded ROS inside repository'
+cd ..
+sudo rm -rf ./melodic
 
 echo 'source /opt/ros/melodic/setup.bash' >> ~/.bashrc
 source ~/.bashrc
@@ -92,13 +98,13 @@ echo '[INFO] Making catkin workspace'
 echo
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws
-catkin_make
+catkin init
+catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+catkin build
 cd ~
+
 echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
 source ~/.bashrc
-
-echo '[INFO] Removing builded ROS inside repository'
-sudo rm -rf ./melodic
 
 echo '[DONE] The installation has completed! Start your journey now!'
 
