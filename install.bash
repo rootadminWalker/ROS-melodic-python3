@@ -85,6 +85,7 @@ echo
 export ROS_PYTHON_VERSION=3
 sudo catkin build
 
+sudo ln -s /opt/ros/melodic/python3 /opt/ros/melodic/python2.7
 sudo apt install ros-melodic-gazebo* -y
 
 echo '[INFO] Removing builded ROS inside repository'
