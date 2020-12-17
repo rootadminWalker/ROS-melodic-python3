@@ -75,7 +75,8 @@ echo
 cd $ROS_PATH
 unzip ./melodic.zip
 cd melodic
-rosdep install --from-path src --ignore-src --rosdistro melodic -y
+sudo $ROS_PATH/skip_dep.bash `rosdep check --from-paths src --ignore-src | grep python | sed -e "s/^apt\t//g" | sed -z "s/\n/ /g" | sed -e "s/python/python3/g"`
+rosdep install --from-paths src --ignore-src -y --skip-keys="`rosdep check --from-paths src --ignore-src | grep python | sed -e "s/^apt\t//g" | sed -z "s/\n/ /g"`"
 
 echo '[INFO] Prepare for installation'
 echo
