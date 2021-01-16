@@ -57,6 +57,8 @@ sudo apt install -y python3 python3-dev python3-pip build-essential -y
 sudo mkdir -p /opt/ros/melodic/lib/python3
 sudo ln -s /opt/ros/melodic/lib/python3 /opt/ros/melodic/lib/python2.7
 
+sudo apt install ros-melodic-gazebo* -y
+
 echo '[INFO] Installing packages which build ROS'
 echo
 
@@ -87,8 +89,6 @@ echo '[INFO] Installing ROS'
 echo
 export ROS_PYTHON_VERSION=3
 sudo catkin build
-
-sudo apt install ros-melodic-gazebo* -y
 
 echo '[INFO] Removing builded ROS inside repository'
 cd ..
