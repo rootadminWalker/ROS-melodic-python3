@@ -63,7 +63,7 @@ echo '[INFO] Installing packages which build ROS'
 echo
 
 sudo -H pip3 install rosdep rospkg rosinstall wstool vcstools catkin_tools catkin_pkg
-sudo apt install python3-pyqt5 python3-defusedxml
+sudo apt install python3-pyqt5 python3-defusedxml cmake make gcc
 
 echo '[INFO] Initializing packages'
 echo
