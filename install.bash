@@ -45,6 +45,9 @@ echo '[INFO] Updating and upgrading packages'
 sudo apt update -y
 sudo apt upgrade -y
 
+sudo systemctl disable unattended-upgrades
+sudo systemctl stop unattended-upgrades
+
 echo '[PROGRESS 1/1] ROS melodic with python3'
 echo '[INFO] Setting up keys'
 echo
